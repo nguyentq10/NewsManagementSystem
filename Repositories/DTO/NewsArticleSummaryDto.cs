@@ -14,5 +14,7 @@ namespace Repositories.DTO
         public DateTime? CreatedDate { get; set; }
         public string NewsSource { get; set; }
         public string CategoryName { get; set; }
+
+        public List<string> Tags { get; set; } = new List<string>();
     }
 }

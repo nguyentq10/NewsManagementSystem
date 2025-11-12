@@ -23,6 +23,7 @@ namespace Repositories.Repository
                 .AsNoTracking()
                 .Where(n => n.NewsStatus == true) 
                 .Include(n => n.Category)
+                .Include(n => n.Tags)
                 .Select(n => new NewsArticleSummaryDto
                 {
                     NewsArticleId = n.NewsArticleId,
@@ -30,7 +31,8 @@ namespace Repositories.Repository
                     Headline = n.Headline,
                     CreatedDate = n.CreatedDate,
                     NewsSource = n.NewsSource,
-                    CategoryName = n.Category.CategoryName
+                    CategoryName = n.Category.CategoryName,
+                    Tags = n.Tags.Select(t => t.TagName).ToList()
                 })
                 .OrderByDescending(n => n.CreatedDate)
                 .ToListAsync();
@@ -48,6 +50,7 @@ namespace Repositories.Repository
                 .AsNoTracking()
                 .Where(n => n.NewsArticleId == id && n.NewsStatus == true) 
                 .Include(n => n.Category)
+                .Include(n => n.Tags)
                 .Select(n => new NewsArticleDetailDto
                 {
                     NewsArticleId = n.NewsArticleId,
@@ -56,7 +59,8 @@ namespace Repositories.Repository
                     NewsContent = n.NewsContent,
                     NewsSource = n.NewsSource,
                     CreatedDate = n.CreatedDate,
-                    CategoryName = n.Category.CategoryName
+                    CategoryName = n.Category.CategoryName,
+                    Tags = n.Tags.Select(t => t.TagName).ToList()
                 })
                 .FirstOrDefaultAsync();
         }
